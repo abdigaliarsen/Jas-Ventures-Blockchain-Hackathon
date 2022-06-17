@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+## Темы Хакатона:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Крипто Кошелек с обменом валют по текущему курсу
+2. Разработать концепцию игры с внутри игровой валютой с возможностью обмена на NFT token
+3. Бонусная сеть с вознаграждением в виде токенов в маркетинговых целях
+4. Разработать блокчейн бридж между двумя любыми двумя сетями с возможностью перенесения NFT токенов с одной сети в другую и обратно
+5. Разработать систему NFT маркетплейса совмещенную с механизмом DAO
+6. Разработка смарт контракта на ERC 1155 c механизмом DAO
+7. Разработка NFT маркетплейса в области сельского хозяйства
+8. Разработка мобильного приложения NFT маркетплейса
+9. Разработка токена вознаграждения при посещении NFT маркетплейса
 
-## Available Scripts
+# Темы которые мы будем охватывать это 1,3(возможно),4,5,6,7(возможно).
 
-In the project directory, you can run:
+## Идея и тема самого проекта:
 
-### `npm start`
+Cross-Chain NFT Marketplace.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Цель проекта:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Стереть границы между разными блокчейнами, давая пользователям возможность покупать NFT из разных блокчейнов являясь холдером другого блокчейна.
 
-### `npm test`
+## Описание системы:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. DAO
+2. ERC 1155
+3. Бонусная система
+4. Система обмена
+5. Мост
+6. Маркетплейс
 
-### `npm run build`
+## Фуцнкционал:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. DAO это будет тестовые 10 человек которые будут принимать решения. Которые будут иметь власть над маркетплейсом. То есть надо создать небольшое DAO в котором мембершип дает токен.
+2. Теперь надо создать ERC 1155 токен и разделить его на 20 частей. Разделить 10 между аккаунтами участников DAO остальное оставить в казне организации. Этот токен будет доступом в организацию. Этот токен должен будет подвергнут перебросу на другой блокчейн. Если его получает пользователь из другой сети.
+3. Надо создать токен управления системой. Токен будет даваться за каждую покупку на маркетплейсе. И могут быть обменены на ERC 1155.
+4. Система обмена будет обменивать 2 валюты между собой. То есть когда пользователь захочет купить NFT из другой сети система будет обменивать одну криптовалюту на другую по текущему курсу и будут перебрасывать токен на мост между сетями.
+5. Мост будет соединять 2 сети между собой. Мост будет перебрасывать NFT с одной сети на другую. Он будет взаимодействовать с нашим маркетплейсом когда пользователь захочет взять NFT из другой сети.
+6. Маркетплейс это сама система на которой будет работать весь функционал. На маркетплейсе будут NFT которые выпустило само DAO. И за покупку этих NFT будет начисляться токен который в дальнейшем будет частью управления этого DAO.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+###Характеристики:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##Обзор:
+Система из себя представляет собой NFT маркетплейс связанный с децентрализованной автономной организацией (ДАО). У ДАО есть свои ответвления, у каждого ответвления есть своя функция которую она будет выполнять.  
 
-### `npm run eject`
+##Функционал системы:
+Система вмещает в себя следующие функции:
+Минт и сжигание локального ERC 20 токена.
+Минт может происходить через мост между блокчейнами, если пользователь сидит не в сети Эфириума.
+Создание ответвление ДАО за счет локального токена.
+Покупка имеющихся токенов ERC 1155 за локальные токены, которые дают доступ участия в ДАО.
+Покупка ERC 1155 может происходить через мост между сетями, если пользователь сидит не в сети Эфириума. 
+Голосовать на определенных выборах внутри ДАО для участников организации.
+	
+##Компоненты:
+В системе находятся следующие компоненты:
+1. Мост между блокчейнами.
+2. ERC 20 и 1155 токены.
+3. ДАО и его ответвления.
+4. Маркетплейс
+	
+#Мост между блокчейнами:
+	Мост между блокчейнами будет соединять не только блокчейны на ВМЭ, но и такую сеть как Солана. То есть все что будет доступно в системе для Эфириум пользователей, тоже самое будет доступно и для Солана пользователей. 
+	
+#ERC 20 и 1155 токены:
+	ERC 20 (ОТС) и ERC 1155 (токен доступа) будут являются главными единицами управления в системе. ОТС будет использоваться в виде расходного материала и платежной валюты, а токен доступа будет являться единицей которая дает право участвовать в голосовании ДАО. Токен доступа будет добываться только за счет ОТС. 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#ДАО и внутриорганизационные опросы:
+  ДАО будет вмещать себя тех пользователей которые имеют в своем кошельке ERC 1155. К нашему ДАО присущи следующие функционалы:
+Создание нового опроса с определенной темой/проблемой или вопросом и уникальным для опроса идентификационным номером. То есть с созданием каждого опроса, будет создаваться определенное количество токенов доступа, которые будут давать право на голосование в этом опросе. Вдобавок токен доступа будет давать право участвовать в голосованиях затрагивающих все ДАО.
+Вес голоса в ДАО будет определяться количеством токенов доступа в кошельке пользователя.
+Один токен доступа можно будет использовать только один раз и после этого он будет использоваться только при подсчете веса голоса для всей системы. Также все опросы и действия которые они произвели после активации будут записаны на блокчейне, то есть каждый из токенов доступа в потенциале может иметь историческую ценность.
+	
+#Маркетплейс:
+	Маркетплейс будет из себя представлять место где будут продаваться токены доступа за ОТС. Когда будет осуществляться покупка покупка токена доступа для пользователя на Солана, будет активироваться мост между сетями и переносить токен из одной сети в другую. 
+	Даже после того как опрос закончится пользователи могут продать свои токены доступа другим пользователям которые не принимали участия в опросах до этого, а просто хотят стать частью самой организации.
