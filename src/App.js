@@ -8,9 +8,10 @@ import Marketplace from "./components/marketplace";
 import Profile from "./components/profile/profile";
 import Dao from "./components/dao";
 import Tokens from "./components/tokens/tokens";
+import Vote from "./components/vote/vote";
 
 function App() {
-    const [connected, setConnected] = useState(false);
+    const [connected, setConnected] = useState(true);
     const [inMarketplace, setInMarketplace] = useState(false);
     const [inProfile, setInProfile] = useState(false);
 
@@ -42,7 +43,11 @@ function App() {
                     }
                 />
                 <Route path="/dao" element={<Dao />} />
-                <Route path="/tokens" element={<Tokens />} />
+                <Route
+                    path="/tokens"
+                    element={<Tokens setInProfile={setInProfile} />}
+                />
+                <Route path="/vote" element={<Vote />} />
             </Routes>
         </div>
     );

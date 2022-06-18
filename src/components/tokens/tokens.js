@@ -1,10 +1,16 @@
+import { useEffect } from "react";
+
 import SolidButton from "../buttons/solid-button";
 
 import TokensCard from "../cards/token-card";
 
 import "./token.sass";
 
-const Tokens = () => {
+const Tokens = ({ setInProfile }) => {
+    useEffect(() => {
+        setInProfile(false);
+    }, []);
+
     return (
         <div className="tokens">
             <h2 className="tokens-header">12.3 otc left</h2>
