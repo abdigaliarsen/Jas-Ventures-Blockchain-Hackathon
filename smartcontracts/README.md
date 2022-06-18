@@ -1,9 +1,9 @@
 MockTargetContract https://ropsten.etherscan.io/address/0x15d0D226DDB1Dff2106b0FA1519fe48C7C1cE0C7#code
 
-ERC20: https://ropsten.etherscan.io/address/0xF90406688C9fBbdc713866A71a4D967c3F9D653b#code
+ERC20: https://ropsten.etherscan.io/address/0x4A058B9111DDa22d89582C7BD32b7D4C5ee362d6#code
 
-ERC1155: https://ropsten.etherscan.io/address/0x84bF55AD762e73aA96ED7218c73381570b687881#code
+ERC1155: https://ropsten.etherscan.io/address/0xB3D903EdD3031449b2b9955b15A9f773AfDA53fc#code
 
-Marketplace: https://ropsten.etherscan.io/address/0x1032f080170E71E104bAa9FB1F470FDCe526d509#code
+Marketplace: https://ropsten.etherscan.io/address/0x1ab14edcD75D7daE3A6fbaE8773e915A122CEB1a#code
 
-DAO: https://ropsten.etherscan.io/address/0x0618F347FE6A1E3E61b07bF5BbAf108fBEDE537e#code
+DAO: https://ropsten.etherscan.io/address/0xf696256AccC7Ee8C0602aC45c8ec06F7aCF411fe#code

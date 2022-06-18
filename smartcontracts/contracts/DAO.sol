@@ -5,7 +5,7 @@ import "./token/MarketplaceERC1155.sol";
 import "./token/MarketplaceERC20.sol";
 
 contract DAO {
-    uint256 public CREATION_COST = 100;
+    uint256 public CREATION_COST = 20;
 
     struct Voting {
         address chairman;

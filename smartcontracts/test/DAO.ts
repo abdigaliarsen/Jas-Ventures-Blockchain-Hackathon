@@ -8,7 +8,7 @@ describe("DAO", function () {
     const ERC20_NAME = "TEST";
     const ERC20_SYMBOL = "TST";
     const ERC1155_BASE_URI = "https://example.com";
-    const CREATION_COST = 100;
+    const CREATION_COST = 20;
     const TARGET_CONTRACT_ABI = [{
         "inputs": [],
         "name": "foo",
@@ -73,6 +73,7 @@ describe("DAO", function () {
 
         const iface = new ethers.utils.Interface(TARGET_CONTRACT_ABI);
         calldata = iface.encodeFunctionData("foo", []);
+        console.log(calldata);
 
         await erc20.mintTo(erc20amount, {
             value: ethers.utils.parseEther("100.0")
