@@ -13,7 +13,7 @@ const Landing = () => {
             <img src={bg} className="landing-img" />
 
             <div id="container" className="cube-1">
-                <div id="cube" class="animate">
+                <div id="cube" className="animate">
                     <div></div>
                     <div></div>
                     <div></div>
@@ -24,7 +24,7 @@ const Landing = () => {
             </div>
 
             <div id="container" className="cube-2">
-                <div id="cube" class="animate">
+                <div id="cube" className="animate">
                     <div></div>
                     <div></div>
                     <div></div>
