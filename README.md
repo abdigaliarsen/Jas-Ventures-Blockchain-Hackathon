@@ -1,7 +1,5 @@
 ![Otrar logo preview](/otrar.png "Otrar preview")
 
-![image](https://user-images.githubusercontent.com/74203105/174439111-b61e6988-a8c7-413e-991f-fc073e2529a1.png)
-
 
 ## Темы Хакатона:
 
