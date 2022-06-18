@@ -40,4 +40,8 @@ contract MarketplaceERC1155 is ERC1155Supply {
         _balances[tokenId][to] += amount;
         _balances[tokenId][from] -= amount;
     }
+
+    function setUri(string memory uri) external {
+        _setURI(uri);
+    }
 }
