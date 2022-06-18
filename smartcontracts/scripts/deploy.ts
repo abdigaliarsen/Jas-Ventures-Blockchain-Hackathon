@@ -1,12 +1,10 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const NFT = await ethers.getContractFactory("NFT");
-  const nft = await NFT.deploy();
-
-  await nft.deployed();
-
-  console.log(`NFT is deployed to ${nft.address}`);
+  const TARGET_CONTRACT = await ethers.getContractFactory("MockTargetContract");
+  const targetContract = await TARGET_CONTRACT.deploy();
+  await targetContract.deployed();
+  console.log(`Target contract is deployed to ${targetContract.address}`);
 }
 
 main().catch((error) => {

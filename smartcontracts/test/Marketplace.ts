@@ -88,7 +88,7 @@ describe("Marketplace", function () {
             expect(await Marketplace.createItem(id, amount, category))
                 .to.emit("Marketplace", "ItemCreated")
                 .withArgs(id, amount, signers[0].address);
-            expect(await Marketplace.owners(id)).to.equal(signers[0].address);
+            expect(await Marketplace.creators(id)).to.equal(signers[0].address);
         });
     });
 
@@ -221,7 +221,7 @@ describe("Marketplace", function () {
             expect(await Marketplace.connect(signers[1]).buyItem(id, amount))
                 .to.emit("Marketplace", "ItemBought")
                 .withArgs(id, amount, price, signers[0].address, signers[1].address);
-            expect(await Marketplace.owners(id)).to.equal(signers[1].address);
+            expect(await Marketplace.creators(id)).to.equal(signers[1].address);
             expect(await Marketplace.isListed(id)).to.equal(false);
         });
     });

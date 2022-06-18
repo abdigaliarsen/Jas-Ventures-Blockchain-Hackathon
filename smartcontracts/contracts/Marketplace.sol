@@ -15,15 +15,20 @@ contract Marketplace is AccessControl {
 
     mapping(uint256 => bool) public isListed;
     mapping(uint256 => uint256) public prices;
-    mapping(uint256 => address) public owners;
+
+    /// @dev We define creator of ERC1155 token to set the admin of the poll.
+    /// Admin of the future poll pays commission to create the poll.
+    /// All other users buy ERC1155 tokens listed by admin to participate in the poll.
+    /// Admin MAY buy listed tokens to participate in the poll.
+    mapping(uint256 => address) public creators;
 
     MarketplaceERC1155 immutable public erc1155;
     MarketplaceERC20 immutable public erc20;
 
-    event ItemListed(uint256 tokenId, uint256 amount, uint256 price, address owner);
-    event ItemCreated(uint256 tokenId, uint256 amount, address owner);
-    event ListingCanceled(uint256 tokenId, address owner);
-    event ItemBought(uint256 tokenId, uint256 amount, uint256 price, address seller, address buyer);
+    event ItemListed(uint256 indexed tokenId, uint256 amount, uint256 price, address owner);
+    event ItemCreated(uint256 indexed tokenId, uint256 amount, address owner);
+    event ListingCanceled(uint256 indexed tokenId, address owner);
+    event ItemBought(uint256 indexed tokenId, uint256 amount, uint256 price, address seller, address buyer);
     event Withdrawn(uint256 amount);
 
     constructor(address _erc1155, address _erc20) {
@@ -39,13 +44,13 @@ contract Marketplace is AccessControl {
 
         erc20.transferFrom(msg.sender, address(this), CREATION_COST);
         erc1155.mintTo(msg.sender, _tokenId, _amount, _category);
-        owners[_tokenId] = msg.sender;
+        creators[_tokenId] = msg.sender;
 
         emit ItemCreated(_tokenId, _amount, msg.sender);
     }
 
     function listItem(uint256 _tokenId, uint256 _amount, uint256 _price) external {
-        require(owners[_tokenId] == msg.sender, "Marketplace: Only token owner may list the token");
+        require(creators[_tokenId] == msg.sender, "Marketplace: Only token owner may list the token");
         require(isListed[_tokenId] == false, "Marketplace: Token is already listed");
         require(_price != 0, "Marketplace: Price cannot be zero");
         require(_amount != 0, "Marketplace: Cannot list zero tokens");
@@ -59,7 +64,7 @@ contract Marketplace is AccessControl {
     }
 
     function cancelListing(uint256 _tokenId, uint256 _amount) external {
-        require(owners[_tokenId] == msg.sender, "Marketplace: Only owner may cancel listing");
+        require(creators[_tokenId] == msg.sender, "Marketplace: Only owner may cancel listing");
         require(isListed[_tokenId] == true, "Marketplace: Token is not listed");
         require(erc1155.balanceOf(address(this), _tokenId) >= _amount, "Marketplace: Too huge amount to cancel");
 
@@ -75,12 +80,13 @@ contract Marketplace is AccessControl {
         require(erc20.balanceOf(msg.sender) >= prices[_tokenId], "Marketplace: Not enough erc20 tokens to buy item");
 
         erc20.transferFrom(msg.sender, address(this), prices[_tokenId] * FEE_PERCENTAGE / 100);
-        erc20.transferFrom(msg.sender, owners[_tokenId], prices[_tokenId]);
+        erc20.transferFrom(msg.sender, creators[_tokenId], prices[_tokenId]);
+
         erc1155.transfer(msg.sender, _tokenId, _amount);
         isListed[_tokenId] = false;
 
-        emit ItemBought(_tokenId, _amount, prices[_tokenId], owners[_tokenId], msg.sender);
-        owners[_tokenId] = msg.sender;
+        emit ItemBought(_tokenId, _amount, prices[_tokenId], creators[_tokenId], msg.sender);
+        creators[_tokenId] = msg.sender;
     }
 
     function withdraw() onlyRole(OWNER_ROLE) external {
