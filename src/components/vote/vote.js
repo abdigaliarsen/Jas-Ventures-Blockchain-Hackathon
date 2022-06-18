@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -5,13 +7,35 @@ import {
     faCheckCircle,
     faExternalLinkSquare,
     faUpload,
+    faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 
 import GreenButton from "../buttons/green-button";
+import SolidButton from "../buttons/solid-button";
 
 import "./vote.sass";
 
-const Vote = () => {
+const Vote = ({ setInProfile }) => {
+    const numberOfTokens = 0;
+
+    useEffect(() => {
+        setInProfile(false);
+    }, []);
+
+    if (!numberOfTokens) {
+        return (
+            <div className="no-tokens">
+                <h2 className="no-tokens-header">
+                    You haven’t purchased tokens to supply from please create
+                    the packet first
+                </h2>
+                <Link to="/tokens">
+                    <SolidButton text="my tokens" icon={faCoins} />
+                </Link>
+            </div>
+        );
+    }
+
     return (
         <div className="vote">
             <h2 className="vote-header">Place voting</h2>

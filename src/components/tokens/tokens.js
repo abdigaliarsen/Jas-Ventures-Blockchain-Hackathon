@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import SolidButton from "../buttons/solid-button";
 
@@ -14,9 +15,11 @@ const Tokens = ({ setInProfile }) => {
     return (
         <div className="tokens">
             <h2 className="tokens-header">12.3 otc left</h2>
-            <div className="tokens-button">
-                <SolidButton text="create +" />
-            </div>
+            <Link to="/tokens/purchase" style={{ textDecoration: "none" }}>
+                <div className="tokens-button">
+                    <SolidButton text="create +" />
+                </div>
+            </Link>
             <div className="tokens-container">
                 <TokensCard
                     name="token name"
