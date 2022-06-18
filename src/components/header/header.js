@@ -12,17 +12,11 @@ import Logo from "./header-img/logo.png";
 
 import "./header.sass";
 
-const Header = ({ login, connected, inMarketplace, inProfile }) => {
-    const pathname = window.location.pathname;
+import { onConnect, onDisconnect } from "../web3";
+
+const Header = ({ login, connected, inMarketplace, inProfile, setConnected, setDisconnected }) => {
     return (
-        <header
-            className="header"
-            style={
-                pathname === "/"
-                    ? { borderBottom: "none" }
-                    : { borderBottom: "1px solid #121515" }
-            }
-        >
+        <header className="header">
             <div className="header-container">
                 <Link to="/">
                     <div className="header-logo">
@@ -50,10 +44,16 @@ const Header = ({ login, connected, inMarketplace, inProfile }) => {
                         )}
                         {inProfile && (
                             <div className="header-inmarket">
+                                <Link to="/">
                                 <LinedButton
                                     text="disconnect"
                                     icon={faArrowRightFromBracket}
+                                    action={async () => {
+                                        onDisconnect();
+                                        setConnected(false);
+                                    }}
                                 />
+                                </Link>
                             </div>
                         )}
 
@@ -66,11 +66,9 @@ const Header = ({ login, connected, inMarketplace, inProfile }) => {
                         )}
                     </div>
                 ) : (
-                    <SolidButton
-                        action={async () => await login()}
-                        text="connect wallet"
-                        icon={faWallet}
-                    />
+                    <Link to="/marketplace">
+                        <SolidButton action={async () => await login() } text="connect wallet" icon={faWallet} onClick={onConnect}/>
+                    </Link>
                 )}
             </div>
         </header>

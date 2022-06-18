@@ -29,6 +29,13 @@ export async function onConnect() {
         let ethBalance = await web3.eth.getBalance(account);
         ethBalance = web3.utils.fromWei(ethBalance, 'ether');
 
+        const userInfo = {  chainId: chainId,
+                            account: account,
+                            ethBalance: ethBalance
+        }
+
+        localStorage.setItem(key, JSON.stringify( userInfo ));
+
         console.log({
             account: account,
             balance: ethBalance,
@@ -42,3 +49,26 @@ export async function onConnect() {
         );
     }
 }
+
+
+
+export function onDisconnect () {
+    window.localStorage.removeItem('userAccount');
+  }
+
+
+export function saveUserInfo (ethBalance, account, chainId) {
+    const userAccount = {
+      account: account,
+      balance: ethBalance,
+      connectionid: chainId,
+    };
+    window.localStorage.setItem(key, JSON.stringify(userAccount)); //user persisted data
+    const userData = JSON.parse(localStorage.getItem(key));
+  };
+
+const key = "userAccount"
+
+
+
+
