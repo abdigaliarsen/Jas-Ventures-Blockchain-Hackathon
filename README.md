@@ -1,3 +1,6 @@
+![Otrar logo preview](/otrar.png "Otrar preview")
+
+
 ## Темы Хакатона:
 
 1. Крипто Кошелек с обменом валют по текущему курсу
