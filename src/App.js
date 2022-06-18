@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Header from "./components/header/header";
 import Landing from "./components/landing";
@@ -18,13 +18,20 @@ function App() {
     const [connected, setConnected] = useState(false);
     const [inMarketplace, setInMarketplace] = useState(false);
     const [inProfile, setInProfile] = useState(false);
+    const navigate = useNavigate();
 
     const login = async () => {
         await onConnect().then((data) => {
             console.log(data);
             setConnected(true);
         });
-    }
+    };
+
+    useEffect(() => {
+        if (connected) {
+            return navigate("/marketplace");
+        }
+    }, [connected]);
 
     return (
         <div className="App">

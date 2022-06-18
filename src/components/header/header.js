@@ -13,8 +13,16 @@ import Logo from "./header-img/logo.png";
 import "./header.sass";
 
 const Header = ({ login, connected, inMarketplace, inProfile }) => {
+    const pathname = window.location.pathname;
     return (
-        <header className="header">
+        <header
+            className="header"
+            style={
+                pathname === "/"
+                    ? { borderBottom: "none" }
+                    : { borderBottom: "1px solid #121515" }
+            }
+        >
             <div className="header-container">
                 <Link to="/">
                     <div className="header-logo">
@@ -58,9 +66,11 @@ const Header = ({ login, connected, inMarketplace, inProfile }) => {
                         )}
                     </div>
                 ) : (
-                    <Link to="/marketplace">
-                        <SolidButton action={async () => await login() } text="connect wallet" icon={faWallet} />
-                    </Link>
+                    <SolidButton
+                        action={async () => await login()}
+                        text="connect wallet"
+                        icon={faWallet}
+                    />
                 )}
             </div>
         </header>
