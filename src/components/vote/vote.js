@@ -16,7 +16,7 @@ import SolidButton from "../buttons/solid-button";
 import "./vote.sass";
 
 const Vote = ({ setInProfile }) => {
-    const numberOfTokens = 0;
+    const numberOfTokens = 1;
 
     useEffect(() => {
         setInProfile(false);
