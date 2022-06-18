@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -12,14 +12,24 @@ import Vote from "./components/vote/vote";
 import Abi from "./components/abi/abi";
 import Purchase from "./components/purchase/purchase";
 
+import { onConnect } from "./components/web3/index";
+
 function App() {
-    const [connected, setConnected] = useState(true);
+    const [connected, setConnected] = useState(false);
     const [inMarketplace, setInMarketplace] = useState(false);
     const [inProfile, setInProfile] = useState(false);
+
+    const login = async () => {
+        await onConnect().then((data) => {
+            console.log(data);
+            setConnected(true);
+        });
+    }
 
     return (
         <div className="App">
             <Header
+                login={login}
                 connected={connected}
                 inMarketplace={inMarketplace}
                 inProfile={inProfile}

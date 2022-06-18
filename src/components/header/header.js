@@ -12,7 +12,7 @@ import Logo from "./header-img/logo.png";
 
 import "./header.sass";
 
-const Header = ({ connected, inMarketplace, inProfile }) => {
+const Header = ({ login, connected, inMarketplace, inProfile }) => {
     return (
         <header className="header">
             <div className="header-container">
@@ -59,7 +59,7 @@ const Header = ({ connected, inMarketplace, inProfile }) => {
                     </div>
                 ) : (
                     <Link to="/marketplace">
-                        <SolidButton text="connect wallet" icon={faWallet} />
+                        <SolidButton action={async () => await login() } text="connect wallet" icon={faWallet} />
                     </Link>
                 )}
             </div>
