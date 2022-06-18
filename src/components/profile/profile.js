@@ -35,7 +35,9 @@ const Profile = ({ setInProfile, setInMarketplace }) => {
                         {userInfluence}
                     </div>
                 </div>
-                <SolidButton text="place voting +" />
+                <Link to="/vote">
+                    <SolidButton text="place voting +" />
+                </Link>
                 <div className="profile-tokens">
                     <Link to="/tokens">
                         <LinedButton text="my tokens" icon={faCoins} />

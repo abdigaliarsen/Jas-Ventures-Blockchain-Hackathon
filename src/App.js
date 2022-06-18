@@ -9,6 +9,7 @@ import Profile from "./components/profile/profile";
 import Dao from "./components/dao";
 import Tokens from "./components/tokens/tokens";
 import Vote from "./components/vote/vote";
+import Abi from "./components/abi/abi";
 
 function App() {
     const [connected, setConnected] = useState(true);
@@ -48,6 +49,7 @@ function App() {
                     element={<Tokens setInProfile={setInProfile} />}
                 />
                 <Route path="/vote" element={<Vote />} />
+                <Route path="/vote/abi" element={<Abi />} />
             </Routes>
         </div>
     );

@@ -29,10 +29,12 @@ const Header = ({ connected, inMarketplace, inProfile }) => {
                     <div className="header-condition">
                         {inMarketplace && (
                             <div className="header-inmarket">
-                                <SolidButton
-                                    text="place voting +"
-                                    inMarketplace={inMarketplace}
-                                />
+                                <Link to="/vote">
+                                    <SolidButton
+                                        text="place voting +"
+                                        inMarketplace={inMarketplace}
+                                    />
+                                </Link>
                                 <Link to="/profile">
                                     <LinedButton text="profile" icon={faUser} />
                                 </Link>
