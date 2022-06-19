@@ -20,6 +20,8 @@ import {
     daoInteract,
 } from "../web3/smartcontracts";
 
+import { hashFromAbi } from "../web3";
+
 import ApproveModal from "../approve-modal";
 
 import "./vote.sass";
@@ -29,6 +31,19 @@ const Vote = ({ setInProfile, abiRef }) => {
     const [numberOfTokens, setNumberOfTokens] = useState(0);
     const [isModal, setIsModal] = useState(false);
     const [cost, setCost] = useState(0);
+    const [abiEncoded, setAbiEncoded] = useState();
+
+    console.log(abiRef);
+
+    // abiRef && Web3.eth.abi.encodeFunctionSignature(abiRef.current.value)
+
+    // useEffect(() => {
+    //     console.log(abiRef);
+    // }, [abiRef]);
+
+    // if (abiRef && abiRef.current) {
+    // setAbiEncoded();
+    // }
 
     const tokenIdRef = useRef(null);
     const contractIdRef = useRef(null);
@@ -76,14 +91,18 @@ const Vote = ({ setInProfile, abiRef }) => {
     const approved = () => {
         setIsModal(false);
 
-        erc20Interact().then(async (token) => {
-            await token.methods
-                .approve("0x74bf3634F4E28D196009EB25ACae96f9E65b4f0E", cost)
-                .send({ from: user.account })
-                .then(() => {
-                    createToken();
-                });
-        });
+        console.log(abiEncoded);
+
+        // console.log(hashFromAbi(abiRef.current.value));
+
+        // erc20Interact().then(async (token) => {
+        //     await token.methods
+        //         .approve("0x74bf3634F4E28D196009EB25ACae96f9E65b4f0E", cost)
+        //         .send({ from: user.account })
+        //         .then(() => {
+        //             createToken();
+        //         });
+        // });
     };
 
     const createToken = async () => {
@@ -92,25 +111,26 @@ const Vote = ({ setInProfile, abiRef }) => {
             await (
                 await token.methods.createVoting(
                     tokenIdRef.current.value,
-                    contractIdRef.current.value
+                    contractIdRef.current.value,
+                    hashFromAbi(abiRef.current.value)
                 )
             ).send({ from: user.account });
         });
     };
 
-    if (!numberOfTokens) {
-        return (
-            <div className="no-tokens">
-                <h2 className="no-tokens-header">
-                    You haven't purchased tokens to supply from please create
-                    the packet first
-                </h2>
-                <Link to="/tokens">
-                    <SolidButton text="my tokens" icon={faCoins} />
-                </Link>
-            </div>
-        );
-    }
+    // if (!numberOfTokens) {
+    //     return (
+    //         <div className="no-tokens">
+    //             <h2 className="no-tokens-header">
+    //                 You haven't purchased tokens to supply from please create
+    //                 the packet first
+    //             </h2>
+    //             <Link to="/tokens">
+    //                 <SolidButton text="my tokens" icon={faCoins} />
+    //             </Link>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className="vote">
