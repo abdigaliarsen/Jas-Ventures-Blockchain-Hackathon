@@ -33,8 +33,6 @@ const Vote = ({ setInProfile, abiRef }) => {
     const [cost, setCost] = useState(0);
     const [abiEncoded, setAbiEncoded] = useState();
 
-    console.log(abiRef);
-
     // abiRef && Web3.eth.abi.encodeFunctionSignature(abiRef.current.value)
 
     // useEffect(() => {
@@ -48,7 +46,6 @@ const Vote = ({ setInProfile, abiRef }) => {
     const tokenIdRef = useRef(null);
     const contractIdRef = useRef(null);
     const timeRef = useRef(null);
-    const otcRef = useRef(null);
 
     const user = JSON.parse(localStorage.getItem("userAccount"));
 
@@ -91,18 +88,16 @@ const Vote = ({ setInProfile, abiRef }) => {
     const approved = () => {
         setIsModal(false);
 
-        console.log(abiEncoded);
+        // console.log(localStorage.getItem("abi"));
 
-        // console.log(hashFromAbi(abiRef.current.value));
-
-        // erc20Interact().then(async (token) => {
-        //     await token.methods
-        //         .approve("0x74bf3634F4E28D196009EB25ACae96f9E65b4f0E", cost)
-        //         .send({ from: user.account })
-        //         .then(() => {
-        //             createToken();
-        //         });
-        // });
+        erc20Interact().then(async (token) => {
+            await token.methods
+                .approve("0xF9Ac33b7648879Cb7D98397713338b7FD85E16A4", cost)
+                .send({ from: user.account })
+                .then(() => {
+                    createToken();
+                });
+        });
     };
 
     const createToken = async () => {
@@ -112,7 +107,8 @@ const Vote = ({ setInProfile, abiRef }) => {
                 await token.methods.createVoting(
                     tokenIdRef.current.value,
                     contractIdRef.current.value,
-                    hashFromAbi(abiRef.current.value)
+                    hashFromAbi(localStorage.getItem("abi")),
+                    parseInt(timeRef.current.value)
                 )
             ).send({ from: user.account });
         });
