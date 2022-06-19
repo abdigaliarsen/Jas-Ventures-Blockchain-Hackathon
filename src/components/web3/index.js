@@ -24,7 +24,8 @@ export async function onConnect() {
 
         const accounts = await web3.eth.getAccounts();
         const chainId = await web3.eth.getChainId();
-        const account = await accounts[0];
+        //const account = await accounts[0];
+        const account = "0xEEe0b9aDd54368E311634a03ace296fb13E64157";
 
         let ethBalance = await web3.eth.getBalance(account);
         ethBalance = web3.utils.fromWei(ethBalance, 'ether');
