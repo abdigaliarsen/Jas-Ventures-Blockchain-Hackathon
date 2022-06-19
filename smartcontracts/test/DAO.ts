@@ -17,12 +17,13 @@ describe("DAO", function () {
         "type": "function"
     }];
 
-    const id = 1;
+    const id = 0;
     const amount = 5;
     const erc20amount = 100;
     const category = "real estate";
     const price = 10;
     const votingPeriod = 60;
+    const TOKEN_PRICE = 0.01;
 
     let signers: Array<SignerWithAddress>;
 
@@ -56,28 +57,27 @@ describe("DAO", function () {
         Dao = (await DAO.deploy(erc20.address, erc1155.address)) as DAO;
         await Dao.deployed();
 
-        await erc20.mintTo(erc20amount, {
-            value: ethers.utils.parseEther("100.0")
-        });
+        await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
+            });
         await erc20.approve(Marketplace.address, erc20amount);
 
-        await erc20.mintTo(erc20amount, {
-            value: ethers.utils.parseEther("100.0")
-        });
+        await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
+            });
         await erc20.approve(Dao.address, erc20amount);
 
-        await Marketplace.createItem(id, amount, category);
+        await Marketplace.createItem(amount, category);
 
         await erc1155.approve(Marketplace.address, id, amount);
         await Marketplace.listItem(id, amount, price);
 
         const iface = new ethers.utils.Interface(TARGET_CONTRACT_ABI);
         calldata = iface.encodeFunctionData("foo", []);
-        console.log(calldata);
 
-        await erc20.mintTo(erc20amount, {
-            value: ethers.utils.parseEther("100.0")
-        });
+        await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
+            });
         await erc20.approve(Marketplace.address, erc20amount);
         await Marketplace.buyItem(id, amount);
     });

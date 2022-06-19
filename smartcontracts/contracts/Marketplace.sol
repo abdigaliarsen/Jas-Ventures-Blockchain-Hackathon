@@ -26,7 +26,7 @@ contract Marketplace is AccessControl {
     MarketplaceERC20 immutable public erc20;
 
     event ItemListed(uint256 indexed tokenId, uint256 amount, uint256 price, address owner);
-    event ItemCreated(uint256 indexed tokenId, uint256 amount, address owner);
+    event ItemCreated(uint256 amount, address owner);
     event ListingCanceled(uint256 indexed tokenId, address owner);
     event ItemBought(uint256 indexed tokenId, uint256 amount, uint256 price, address seller, address buyer);
     event Withdrawn(uint256 amount);
@@ -37,16 +37,15 @@ contract Marketplace is AccessControl {
         erc20 = MarketplaceERC20(_erc20);
     }
 
-    function createItem(uint256 _tokenId, uint256 _amount, string memory _category) external {
-        require(erc1155.exists(_tokenId) == false, "Marketplace: Token with such id already exists");
+    function createItem(uint256 _amount, string memory _category) external {
         require(erc20.balanceOf(msg.sender) >= CREATION_COST, "Marketplace: Not enough balance to buy erc1155");
         require(_amount != 0, "Marketplace: Cannot create zero tokens");
 
         erc20.transferFrom(msg.sender, address(this), CREATION_COST);
-        erc1155.mintTo(msg.sender, _tokenId, _amount, _category);
-        creators[_tokenId] = msg.sender;
+        creators[erc1155.tokensCount()] = msg.sender;
+        erc1155.mintTo(msg.sender, _amount, _category);
 
-        emit ItemCreated(_tokenId, _amount, msg.sender);
+        emit ItemCreated(_amount, msg.sender);
     }
 
     function listItem(uint256 _tokenId, uint256 _amount, uint256 _price) external {

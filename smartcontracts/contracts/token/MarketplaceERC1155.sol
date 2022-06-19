@@ -5,18 +5,24 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
 contract MarketplaceERC1155 is ERC1155Supply {
     mapping(uint256 => mapping(address => uint256)) private approvals;
+
+    uint256 public tokensCount;
     mapping(uint256 => string) public categories;
 
     constructor(string memory uri) ERC1155(uri) {}
 
+    event Approved(uint256 indexed tokenId, address from, address to, uint256 amount);
+
     function mintTo(
         address _to,
-        uint256 _tokenId,
         uint256 _amount,
         string memory _category
     ) external {
-        _mint(_to, _tokenId, _amount, "");
-        categories[_tokenId] = _category;
+        _mint(_to, tokensCount, _amount, "");
+        categories[tokensCount] = _category;
+
+        emit TransferSingle(address(0), address(0), _to, tokensCount, _amount);
+        tokensCount++;
     }
 
     function approve(
@@ -25,6 +31,7 @@ contract MarketplaceERC1155 is ERC1155Supply {
         uint256 amount
     ) public {
         approvals[tokenId][to] = amount;
+        emit Approved(tokenId, msg.sender, to, amount);
     }
 
     function transfer(

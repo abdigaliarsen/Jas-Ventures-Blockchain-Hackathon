@@ -9,6 +9,8 @@ describe("Marketplace", function () {
     const ERC1155_BASE_URI = "https://example.com";
     const FEE_PERCENTAGE = 1;
     const CREATION_COST = 100;
+    const TOKEN_PRICE = 0.01;
+    const erc20amount = 10000;
 
     let signers: Array<SignerWithAddress>;
 
@@ -48,63 +50,49 @@ describe("Marketplace", function () {
     });
 
     describe("CreateItem function", function () {
-        const id = 1;
         const amount = 5;
-        const erc20amount = 100;
         const category = "real estate";
 
-        it("Should revert if erc1155 already exists", async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
-            });
-            await erc20.approve(Marketplace.address, erc20amount);
-
-            await Marketplace.createItem(id, amount, category);
-            await expect(Marketplace.createItem(id, amount, category))
-                .to.be.revertedWith("Marketplace: Token with such id already exists");
-        });
-
         it("Should revert if not enough erc20 tokens", async function () {
-            await expect(Marketplace.createItem(id, amount, category))
+            await expect(Marketplace.createItem(amount, category))
                 .to.be.revertedWith("Marketplace: Not enough balance to buy erc1155");
         });
 
         it("Should revert if amount is zero", async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
             await erc20.approve(Marketplace.address, erc20amount);
 
-            await expect(Marketplace.createItem(id, ethers.constants.Zero, category))
+            await expect(Marketplace.createItem(ethers.constants.Zero, category))
                 .to.be.revertedWith("Marketplace: Cannot create zero tokens");
         });
 
         it("Should buy erc1155 tokens", async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
             await erc20.approve(Marketplace.address, erc20amount);
 
-            expect(await Marketplace.createItem(id, amount, category))
+            expect(await Marketplace.createItem(amount, category))
                 .to.emit("Marketplace", "ItemCreated")
-                .withArgs(id, amount, signers[0].address);
-            expect(await Marketplace.creators(id)).to.equal(signers[0].address);
+                .withArgs(amount, signers[0].address);
+            expect(await Marketplace.creators(0)).to.equal(signers[0].address);
         });
     });
 
     describe("ListItem function", function () {
-        const id = 1;
-        const amount = 5;
-        const erc20amount = 100;
+        const id = 0;
+        const amount = 5;        
         const category = "real estate";
         const price = 10;
 
         beforeEach(async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
             await erc20.approve(Marketplace.address, erc20amount);
-            await Marketplace.createItem(id, amount, category);
+            await Marketplace.createItem(amount, category);
         });
 
         it("Should revert if not owner tries to list the token", async function () {
@@ -135,19 +123,19 @@ describe("Marketplace", function () {
     });
 
     describe("CancelListing function", function () {
-        const id = 1;
+        const id = 0;
         const amount = 5;
-        const erc20amount = 100;
+        
         const category = "real estate";
         const price = 10;
 
         beforeEach(async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
 
             await erc20.approve(Marketplace.address, erc20amount);
-            await Marketplace.createItem(id, amount, category);
+            await Marketplace.createItem(amount, category);
 
             await erc1155.approve(Marketplace.address, id, amount);
             await Marketplace.listItem(id, amount, price);
@@ -177,19 +165,19 @@ describe("Marketplace", function () {
     });
 
     describe("BuyItem function", function () {
-        const id = 1;
+        const id = 0;
         const amount = 5;
-        const erc20amount = 100;
+        
         const category = "real estate";
         const price = 10;
 
         beforeEach(async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
 
             await erc20.approve(Marketplace.address, erc20amount);
-            await Marketplace.createItem(id, amount, category);
+            await Marketplace.createItem(amount, category);
 
             await erc1155.approve(Marketplace.address, id, amount);
             await Marketplace.listItem(id, amount, price);
@@ -212,8 +200,8 @@ describe("Marketplace", function () {
         });
 
         it("Should buy token", async function () {
-            await erc20.connect(signers[1]).mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.connect(signers[1]).mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
 
             await erc20.connect(signers[1]).approve(Marketplace.address, erc20amount);
@@ -227,25 +215,25 @@ describe("Marketplace", function () {
     });
 
     describe("Withdraw function", function () {
-        const id = 1;
+        const id = 0;
         const amount = 5;
-        const erc20amount = 100;
+        
         const category = "real estate";
         const price = 10;
 
         beforeEach(async function () {
-            await erc20.mintTo(erc20amount, {
-                value: ethers.utils.parseEther("100.0")
+            await erc20.mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
 
             await erc20.approve(Marketplace.address, erc20amount);
-            await Marketplace.createItem(id, amount, category);
+            await Marketplace.createItem(amount, category);
 
             await erc1155.approve(Marketplace.address, id, amount);
             await Marketplace.listItem(id, amount, price);
             
-            await erc20.connect(signers[1]).mintTo(200, {
-                value: ethers.utils.parseEther("200.0")
+            await erc20.connect(signers[1]).mintTo({
+                value: ethers.utils.parseEther(`${erc20amount * TOKEN_PRICE}`)
             });
             await erc20.connect(signers[1]).approve(Marketplace.address, erc20amount);
             await Marketplace.connect(signers[1]).buyItem(id, amount);
