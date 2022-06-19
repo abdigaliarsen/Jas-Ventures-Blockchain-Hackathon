@@ -1,18 +1,21 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import GreenButton from "../buttons/green-button";
 
 import "./abi.sass";
 
-const Abi = ({ abiRef }) => {
+const Abi = ({ setAbiValue }) => {
     const navigate = useNavigate();
+
+    const changeAbiValue = (e) => {
+        setAbiValue(e.target.value);
+    };
 
     return (
         <div className="abi">
             <h2 className="abi-header">Enter ABI</h2>
             <textarea
-                ref={abiRef}
                 placeholder={`
                 [
                     {
@@ -29,6 +32,7 @@ const Abi = ({ abiRef }) => {
                 cols="30"
                 rows="10"
                 className="abi-textarea"
+                onChange={changeAbiValue}
             ></textarea>
             <div className="abi-container">
                 <GreenButton text="Enter >" action={() => navigate(-1)} />

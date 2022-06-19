@@ -35,6 +35,7 @@ const Tokens = ({ setInProfile }) => {
                     toBlock: "latest",
                 })
                 .then((events) => {
+                    console.log(events);
                     events.forEach((ev) => {
                         ts.push({
                             id: ev.returnValues.id,
@@ -42,9 +43,17 @@ const Tokens = ({ setInProfile }) => {
                         });
                     });
 
-                    setErc1155tokens([...ts]);
+                    let tempTs = [];
+                    for (let i = 0; i < ts.length; i += 2) {
+                        tempTs.push(ts[i]);
+                    }
+
+                    console.log(tempTs);
+
+                    setErc1155tokens([...tempTs]);
                 });
         });
+        console.log(erc1155tokens);
     }, []);
 
     return (

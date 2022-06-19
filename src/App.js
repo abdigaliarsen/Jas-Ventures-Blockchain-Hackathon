@@ -19,7 +19,7 @@ function App() {
     const [inMarketplace, setInMarketplace] = useState(false);
     const [inProfile, setInProfile] = useState(false);
 
-    const abiRef = useRef(null);
+    const [abiValue, setAbiValue] = useState();
 
     const login = async () => {
         await onConnect().then((data) => {
@@ -66,10 +66,13 @@ function App() {
                 <Route
                     path="/vote"
                     element={
-                        <Vote setInProfile={setInProfile} abiRef={abiRef} />
+                        <Vote setInProfile={setInProfile} abiValue={abiValue} />
                     }
                 />
-                <Route path="/vote/abi" element={<Abi abiRef={abiRef} />} />
+                <Route
+                    path="/vote/abi"
+                    element={<Abi setAbiValue={setAbiValue} />}
+                />
             </Routes>
 
             {window.location.pathname !== "/" && (

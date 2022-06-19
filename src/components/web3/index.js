@@ -66,4 +66,10 @@ export function saveUserInfo(ethBalance, account, chainId) {
     const userData = JSON.parse(localStorage.getItem(key));
 }
 
+export function hashFromAbi(abi) {
+    const currentProvider = detectCurrentProvider();
+    const web3 = new Web3(currentProvider);
+    return web3.eth.abi.encodeFunctionSignature(abi);
+}
+
 const key = "userAccount";
