@@ -9,7 +9,7 @@ const Abi = ({ setAbiValue }) => {
     const navigate = useNavigate();
 
     const changeAbiValue = (e) => {
-        setAbiValue(e.target.value);
+        localStorage.setItem("abi", JSON.stringify(e.target.value));
     };
 
     return (
