@@ -50,7 +50,7 @@ const Purchase = () => {
 
         erc20Interact().then(async (token) => {
             await token.methods
-                .approve("0x74bf3634F4E28D196009EB25ACae96f9E65b4f0E", cost)
+                .approve("0xdb39EA16FD4ace62cddD2B233fA7B1a770F7a3c1", cost)
                 .send({ from: user.account })
                 .then(() => {
                     createToken();
@@ -63,7 +63,6 @@ const Purchase = () => {
             await (
                 await token.methods.createItem(
                     // change
-                    Math.floor(Math.random() * 1000000 + 1),
                     supplyRef.current.value,
                     nameRef.current.value
                 )
