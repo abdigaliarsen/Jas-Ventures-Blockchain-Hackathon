@@ -45,6 +45,7 @@ const Marketplace = ({ setInMarketplace, setInProfile }) => {
                         });
 
                         const card = {
+                            id: id,
                             name: name,
                             totalSupply: totalSupply,
                             available: available
@@ -59,7 +60,7 @@ const Marketplace = ({ setInMarketplace, setInProfile }) => {
     }, []);
 
     let cards = erc1155tokens.filter((_, i) => i % 2).map((token, index) => {
-        return <Link to="/dao" style={{ textDecoration: "none" }}>
+        return <Link to={`/dao/${token.id}`} style={{ textDecoration: "none" }}>
             <MarketplaceCard
                 key={index}
                 name={token.name}

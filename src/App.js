@@ -57,7 +57,7 @@ function App() {
                         />
                     }
                 />
-                <Route path="/dao" element={<Dao />} />
+                <Route path="/dao/:tokenid" element={<Dao />} />
                 <Route
                     path="/tokens"
                     element={<Tokens setInProfile={setInProfile} />}

@@ -2,7 +2,7 @@ import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 import SolidButton from "../../buttons/solid-button";
 
-const DaoInfo = () => {
+const DaoInfo = ({ name }) => {
     return (
         <div className="dao-info">
             <div className="dao-info__left">
@@ -12,8 +12,8 @@ const DaoInfo = () => {
                 <SolidButton text="purchase token" icon={faCartArrowDown} />
             </div>
             <div className="dao-info__right">
-                <div className="dao-info__name">Real estate company DAO #1</div>
-                <div className="dao-info__address">0xc7bfd2be302af0782</div>
+                <div className="dao-info__name">{name ? name : `Real estate company DAO #1`}</div>
+                <div className="dao-info__address">0xCc276a60d38165c997eB5650cF3b7F643BC935c8</div>
                 <div className="dao-info__description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
