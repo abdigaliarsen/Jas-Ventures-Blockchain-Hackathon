@@ -52,8 +52,11 @@ NFT маркетплейс для ДАО сервисов.
 	
 ## Запуск программы
 git clone project
+
 npm install -> to install dependencies 
+
 after npm install restart your IDE
+
 npm start -> to start project
 	
 ### ERC 20 и 1155 токены:
