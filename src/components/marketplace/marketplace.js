@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 
 import MarketplaceCard from "../cards/marketplace-card";
 
+import card1 from "./marketplace-img/1.png";
+import card2 from "./marketplace-img/2.png";
+import card3 from "./marketplace-img/3.png";
+
 import "./marketplace.sass";
 
 const Marketplace = ({ setInMarketplace, setInProfile }) => {
@@ -20,6 +24,7 @@ const Marketplace = ({ setInMarketplace, setInProfile }) => {
                         name="Conquer the world"
                         available={276}
                         max={1000}
+                        img={card1}
                     />
                 </Link>
                 <Link to="/dao" style={{ textDecoration: "none" }}>
@@ -27,6 +32,7 @@ const Marketplace = ({ setInMarketplace, setInProfile }) => {
                         name="Peal Avocado"
                         available={276}
                         max={1000}
+                        img={card3}
                     />
                 </Link>
                 <Link to="/dao" style={{ textDecoration: "none" }}>
@@ -34,6 +40,7 @@ const Marketplace = ({ setInMarketplace, setInProfile }) => {
                         name="Cut avocado"
                         available={276}
                         max={1000}
+                        img={card2}
                     />
                 </Link>
             </div>

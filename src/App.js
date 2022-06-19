@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -19,12 +19,14 @@ function App() {
     const [inMarketplace, setInMarketplace] = useState(false);
     const [inProfile, setInProfile] = useState(false);
 
+    const abiRef = useRef(null);
+
     const login = async () => {
         await onConnect().then((data) => {
             console.log(data);
             setConnected(true);
         });
-    }
+    };
 
     return (
         <div className="App">
@@ -63,10 +65,16 @@ function App() {
                 <Route path="/tokens/purchase" element={<Purchase />} />
                 <Route
                     path="/vote"
-                    element={<Vote setInProfile={setInProfile} />}
+                    element={
+                        <Vote setInProfile={setInProfile} abiRef={abiRef} />
+                    }
                 />
-                <Route path="/vote/abi" element={<Abi />} />
+                <Route path="/vote/abi" element={<Abi abiRef={abiRef} />} />
             </Routes>
+
+            {window.location.pathname !== "/" && (
+                <div style={{ marginTop: "10rem" }}></div>
+            )}
         </div>
     );
 }

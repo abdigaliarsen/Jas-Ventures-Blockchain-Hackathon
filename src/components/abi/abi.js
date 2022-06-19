@@ -1,12 +1,18 @@
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import GreenButton from "../buttons/green-button";
 
 import "./abi.sass";
 
-const Abi = () => {
+const Abi = ({ abiRef }) => {
+    const navigate = useNavigate();
+
     return (
         <div className="abi">
             <h2 className="abi-header">Enter ABI</h2>
             <textarea
+                ref={abiRef}
                 placeholder={`
                 [
                     {
@@ -25,7 +31,7 @@ const Abi = () => {
                 className="abi-textarea"
             ></textarea>
             <div className="abi-container">
-                <GreenButton text="Enter >" />
+                <GreenButton text="Enter >" action={() => navigate(-1)} />
             </div>
         </div>
     );

@@ -11,45 +11,41 @@ import "./token.sass";
 const Tokens = ({ setInProfile }) => {
     const [erc1155tokens, setErc1155tokens] = useState([]);
     const [erc20tokens, setErc20tokens] = useState(0);
+    // const user = { account: "0xEEe0b9aDd54368E311634a03ace296fb13E64157" };
+
+    const user = JSON.parse(localStorage.getItem("userAccount"));
 
     useEffect(() => {
         setInProfile(false);
-        const user = { account: "0xEEe0b9aDd54368E311634a03ace296fb13E64157" };
 
         erc20Interact().then(async (token) => {
-            const balance = await (await token.methods.balanceOf(user.account)).call();
+            // console.log(token.methods);
+            const balance = await (
+                await token.methods.balanceOf(user.account)
+            ).call();
             setErc20tokens(balance);
         });
 
         erc1155Interact().then(async (token) => {
             let ts = [];
-            token.getPastEvents("TransferSingle", {
-                filter: { to: user.account },
-                fromBlock: 0,
-                toBlock: "latest"
-            }).then((events) => {
-                 setErc1155tokens([
-                     {
-                         id: events[0].returnValues.id,
-                         value: events[0].returnValues.value
-                     },
+            token
+                .getPastEvents("TransferSingle", {
+                    filter: { to: user.account },
+                    fromBlock: 0,
+                    toBlock: "latest",
+                })
+                .then((events) => {
+                    events.forEach((ev) => {
+                        ts.push({
+                            id: ev.returnValues.id,
+                            value: ev.returnValues.value,
+                        });
+                    });
 
-                     {
-                         id: events[1].returnValues.id,
-                         value: events[1].returnValues.value
-                 }]);
-                // ])
-                // events.forEach((ev) => {
-                //     ts.push({
-                //         id: ev.returnValues.id,
-                //         value: ev.returnValues.value
-                //     });
-                // });
-            });
-
-            setErc1155tokens(ts);
-        })
-    }, [erc1155tokens, erc20tokens, setInProfile]);
+                    setErc1155tokens([...ts]);
+                });
+        });
+    }, []);
 
     return (
         <div className="tokens">
@@ -67,7 +63,7 @@ const Tokens = ({ setInProfile }) => {
                             id={token.id}
                             number={token.value}
                         />
-                    )
+                    );
                 })}
             </div>
         </div>

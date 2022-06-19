@@ -1,4 +1,5 @@
 import "./card.sass";
+import TokenImg from "../marketplace/marketplace-img/3.png";
 
 const ProfileCard = ({ img, name, influence }) => {
     return (
@@ -7,7 +8,11 @@ const ProfileCard = ({ img, name, influence }) => {
                 className="profile-card__img_container
             "
             >
-                {/* <img src={img} alt="token name" className="profile-card__img" /> */}
+                <img
+                    src={TokenImg}
+                    alt="token name"
+                    className="profile-card__img"
+                />
             </div>
             <div className="profile-card__name">{name}</div>
             <div className="profile-card__influence">{influence}</div>

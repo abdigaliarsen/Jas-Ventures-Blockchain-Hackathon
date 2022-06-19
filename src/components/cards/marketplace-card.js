@@ -4,11 +4,11 @@ const MarketplaceCard = ({ img, name, available, max }) => {
     return (
         <div className="marketplace-card">
             <div className="marketplace-card__img_container">
-                {/* <img
+                <img
                     src={img}
                     alt="card image"
                     className="marketplace-card__img"
-                /> */}
+                />
             </div>
 
             <div className="marketplace-card__text">
